@@ -25,7 +25,7 @@ unsigned long g_dLastTime    = 0;
 
 	POD_Math::Matrix4x4 Proj=POD_Math::Matrix4x4();
 	POD_Math::Matrix4x4 ViewM=POD_Math::Matrix4x4();
-	Camera cam; // Декларирую глобально только для демо
+	Camera cam; // Р”РµРєР»Р°СЂРёСЂСѓСЋ РіР»РѕР±Р°Р»СЊРЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ РґРµРјРѕ
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -102,11 +102,11 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 
 	RegisterClassEx(&wcex);
 
-	// Инициализируем ввод, задаем приемник
+	// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РІРІРѕРґ, Р·Р°РґР°РµРј РїСЂРёРµРјРЅРёРє
 	Input::InputSignal::Initialize();
 	Input::InputSignal::SetListener(&HaleInst);
 
-	// Инстанцируем рендерер, задаем камеру
+	// РРЅСЃС‚Р°РЅС†РёСЂСѓРµРј СЂРµРЅРґРµСЂРµСЂ, Р·Р°РґР°РµРј РєР°РјРµСЂСѓ
 	D3D9_Renderer r;
 	r.SetCamera(&cam);
 
@@ -116,7 +116,7 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 						        WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 					            0, 0, 640, 480, NULL, NULL, hInstance, NULL );
 
-	//Передаем хандлеру хандл окна
+	//РџРµСЂРµРґР°РµРј С…Р°РЅРґР»РµСЂСѓ С…Р°РЅРґР» РѕРєРЅР°
 	ErrorHandler::SetHWND(hWnd);
 	
 	ShowWindow(hWnd,SW_NORMAL);
@@ -125,23 +125,23 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 
 	ShowCursor(false);
 
-	// Инициализируем рендерер
+	// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј СЂРµРЅРґРµСЂРµСЂ
 	r.Initialize(hWnd);
 
-	// Создаем матрицу перспективной проекции
+	// РЎРѕР·РґР°РµРј РјР°С‚СЂРёС†Сѓ РїРµСЂСЃРїРµРєС‚РёРІРЅРѕР№ РїСЂРѕРµРєС†РёРё
 	POD_Math::CreatePerspectiveFovLH(Proj,
 									1.0f,
 									1000.0f,
 									D3DXToRadian(45.0f),
 									(float)r.GetWidth()/(float)r.GetHeight());
-	// Задаем её камере
+	// Р—Р°РґР°РµРј РµС‘ РєР°РјРµСЂРµ
 	cam.SetProjectionMatrix(Proj);
 
 	Geometry::Mesh *first=r.CreateMeshFromFile(L"first.WOX",L"t_arctic.tga");
     Geometry::Mesh *second=r.CreateMeshFromFile(L"second.WOX",L"ct_sas.tga");
 
 
-			// Задаем не единичную матрицу второй модели
+			// Р—Р°РґР°РµРј РЅРµ РµРґРёРЅРёС‡РЅСѓСЋ РјР°С‚СЂРёС†Сѓ РІС‚РѕСЂРѕР№ РјРѕРґРµР»Рё
 			POD_Math::Matrix4x4 WorldM={1,0,0,0, 
 									    0,1,0,0,
 									    0,0,1,0,
@@ -158,8 +158,8 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
 		}
 		else
 		{
-			// Временная мера. Недостает ещё одного класса-обертки для контроля за анимацией.
-			// Пока расчитываем на 100 кадров для всех загружаемых моделей
+			// Р’СЂРµРјРµРЅРЅР°СЏ РјРµСЂР°. РќРµРґРѕСЃС‚Р°РµС‚ РµС‰С‘ РѕРґРЅРѕРіРѕ РєР»Р°СЃСЃР°-РѕР±РµСЂС‚РєРё РґР»СЏ РєРѕРЅС‚СЂРѕР»СЏ Р·Р° Р°РЅРёРјР°С†РёРµР№.
+			// РџРѕРєР° СЂР°СЃС‡РёС‚С‹РІР°РµРј РЅР° 100 РєР°РґСЂРѕРІ РґР»СЏ РІСЃРµС… Р·Р°РіСЂСѓР¶Р°РµРјС‹С… РјРѕРґРµР»РµР№
 			g_dCurTime     = clock();
 			g_fElpasedTime = g_dCurTime - g_dLastTime;
 

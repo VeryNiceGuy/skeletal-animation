@@ -38,11 +38,11 @@
 			D3DDECL_END()
 		};
 
-		// Åù¸ íå ðåøèë ÷òî ñ ýòèì äåëàòü...
+		// Ð•Ñ‰Ñ‘ Ð½Ðµ Ñ€ÐµÑˆÐ¸Ð» Ñ‡Ñ‚Ð¾ Ñ ÑÑ‚Ð¸Ð¼ Ð´ÐµÐ»Ð°Ñ‚ÑŒ...
 		d3d = Direct3DCreate9( D3D_SDK_VERSION );
 		if(!d3d) return 0;
 
-		// Âñå âîçâðàùàåìûå çíà÷åíèÿ îòïðàâëÿþòñÿ ïðåìÿêîì â õàíäëåð.
+		// Ð’ÑÐµ Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÐ¼Ñ‹Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð»ÑÑŽÑ‚ÑÑ Ð¿Ñ€ÐµÐ¼ÑÐºÐ¾Ð¼ Ð² Ñ…Ð°Ð½Ð´Ð»ÐµÑ€.
 
 		ErrorHandler::CheckD3D(d3d->GetAdapterDisplayMode( D3DADAPTER_DEFAULT, &d3ddm ) );
 
@@ -97,7 +97,7 @@
 													&d3dpp,
 													&device ));
 
-		// Äóìàþ â êîíöå êîíöîâ âûáðîñèòü D3DX
+		// Ð”ÑƒÐ¼Ð°ÑŽ Ð² ÐºÐ¾Ð½Ñ†Ðµ ÐºÐ¾Ð½Ñ†Ð¾Ð² Ð²Ñ‹Ð±Ñ€Ð¾ÑÐ¸Ñ‚ÑŒ D3DX
 		ErrorHandler::CheckD3D(D3DXCompileShaderFromFileW(L"blender.vsh",
 															0,
 															0,
@@ -160,7 +160,7 @@
 		Geometry::Header head=Geometry::Header();
 		unsigned long ReadBytes=0;
 
-		Geometry::Mesh*  mesh = new(std::nothrow) Geometry::Mesh; // Òîëüêî äëÿ äåìî!
+		Geometry::Mesh*  mesh = new(std::nothrow) Geometry::Mesh; // Ð¢Ð¾Ð»ÑŒÐºÐ¾ Ð´Ð»Ñ Ð´ÐµÐ¼Ð¾!
 
 		SkeletalAnimation::Skeleton& Skeleton = mesh->GetSkeleton();
 
@@ -199,7 +199,7 @@
 							&ReadBytes,
 							0))ErrorHandler::ThreadLastError();
 
-		ErrorHandler::CheckD3D(tVB->Unlock()); // À âäðóã...
+		ErrorHandler::CheckD3D(tVB->Unlock()); // Ð Ð²Ð´Ñ€ÑƒÐ³...
 
 		ErrorHandler::CheckD3D(tIB->Lock(0,0,&idata,0));
 
@@ -232,7 +232,7 @@
 	    ErrorHandler::CheckD3D(GetDevice()->SetIndices(tIB));
 		ErrorHandler::CheckD3D(GetDevice()->SetTexture(0,tTX));
 
-		// À ýòî óæå ìîè)
+		// Ð ÑÑ‚Ð¾ ÑƒÐ¶Ðµ Ð¼Ð¾Ð¸)
 		mesh->SetVertexBuffer(tVB);
 		mesh->SetIndexBuffer(tIB);
 		mesh->SetTexture(tTX);
@@ -270,7 +270,7 @@
 	
 		if(!myCamera) 
 		{
-			ErrorHandler::ShowWarning(L"Êàìåðà íå çàäàíà");
+			ErrorHandler::ShowWarning(L"ÐšÐ°Ð¼ÐµÑ€Ð° Ð½Ðµ Ð·Ð°Ð´Ð°Ð½Ð°");
 			return;
 		};
 
@@ -287,7 +287,7 @@
 		ErrorHandler::CheckD3D(device->SetVertexShaderConstantF(0,
 								reinterpret_cast<float*>(&WorldViewProjection),
 								4));
-		// Ýòî äëÿ íàøåãî íå ñîâñåì êîððåêòíîãî Ëàìáåðòà
+		// Ð­Ñ‚Ð¾ Ð´Ð»Ñ Ð½Ð°ÑˆÐµÐ³Ð¾ Ð½Ðµ ÑÐ¾Ð²ÑÐµÐ¼ ÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ð³Ð¾ Ð›Ð°Ð¼Ð±ÐµÑ€Ñ‚Ð°
 	    ErrorHandler::CheckD3D(device->SetVertexShaderConstantF(4,
 								reinterpret_cast<float*>(&mesh.GetTM()),
 								4));

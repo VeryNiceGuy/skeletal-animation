@@ -4,33 +4,33 @@
 #include <cstdio>
 #include "ErrorHandler.h"      
 
-	SkeletalAnimation::SLERP::SLERP():Keys(),NumKeys(){}; // Обнуляем две переменныe - вот и вся инициализация.
+	SkeletalAnimation::SLERP::SLERP():Keys(),NumKeys(){}; // РћР±РЅСѓР»СЏРµРј РґРІРµ РїРµСЂРµРјРµРЅРЅС‹e - РІРѕС‚ Рё РІСЃСЏ РёРЅРёС†РёР°Р»РёР·Р°С†РёСЏ.
 	SkeletalAnimation::SLERP::~SLERP(){};
 
-	void SkeletalAnimation::SLERP::Initialize( Keyframe*const key, size_t Num) // Кладем указатель на первый кадр последовательности
-	{                                                                          // Задаем количество ключей в последовательности
+	void SkeletalAnimation::SLERP::Initialize( Keyframe*const key, size_t Num) // РљР»Р°РґРµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РїРµСЂРІС‹Р№ РєР°РґСЂ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё
+	{                                                                          // Р—Р°РґР°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РєР»СЋС‡РµР№ РІ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚Рё
 		   Keys=key; NumKeys=Num;
 	};
 
-	void SkeletalAnimation::SLERP::GetInterpolated(const unsigned long t, POD_Math::Matrix4x3& i) // Изымаем ключ из интерполятора
+	void SkeletalAnimation::SLERP::GetInterpolated(const unsigned long t, POD_Math::Matrix4x3& i) // РР·С‹РјР°РµРј РєР»СЋС‡ РёР· РёРЅС‚РµСЂРїРѕР»СЏС‚РѕСЂР°
 	{  
 	   
-			unsigned short Key1=0;   // Номера будущих ключей
+			unsigned short Key1=0;   // РќРѕРјРµСЂР° Р±СѓРґСѓС‰РёС… РєР»СЋС‡РµР№
 			unsigned short Key2=0;
 
-			float startFrameTime = 0.0f; // Их время
+			float startFrameTime = 0.0f; // РС… РІСЂРµРјСЏ
 			float endFrameTime = 0.0f;
 
-			float timeDifference = 0.0f; // Разница между ключами
-			float Scalar = 0.0f;         // Скаляр, как и в любой интерполяции
+			float timeDifference = 0.0f; // Р Р°Р·РЅРёС†Р° РјРµР¶РґСѓ РєР»СЋС‡Р°РјРё
+			float Scalar = 0.0f;         // РЎРєР°Р»СЏСЂ, РєР°Рє Рё РІ Р»СЋР±РѕР№ РёРЅС‚РµСЂРїРѕР»СЏС†РёРё
 
-			const float MSPF = 33.3f;    // Миллисекунд в кадр, реалтайм =) FPS30 
+			const float MSPF = 33.3f;    // РњРёР»Р»РёСЃРµРєСѓРЅРґ РІ РєР°РґСЂ, СЂРµР°Р»С‚Р°Р№Рј =) FPS30 
 
 			POD_Math::Quaternion SlerpResult = {0};
 			POD_Math::Vector3    LerpResult  = {0};
 			POD_Math::Quaternion Normal      = {0};
 
-			// Горжусь что смог додуматься до этого)))
+			// Р“РѕСЂР¶СѓСЃСЊ С‡С‚Рѕ СЃРјРѕРі РґРѕРґСѓРјР°С‚СЊСЃСЏ РґРѕ СЌС‚РѕРіРѕ)))
 			Key1=static_cast<unsigned short>(floor((static_cast<float>(t) / MSPF)));
 			
 			if(Key1 >= NumKeys-1) Key2=Key1; 
@@ -40,8 +40,8 @@
 			endFrameTime =   MSPF * Key2;
 
 			timeDifference = endFrameTime - startFrameTime;
-			Scalar = (t - startFrameTime) / timeDifference; // Исключаем время первого ключа и делим на разницу. 
-															// Запутывающая формула, потом объясню)
+			Scalar = (t - startFrameTime) / timeDifference; // РСЃРєР»СЋС‡Р°РµРј РІСЂРµРјСЏ РїРµСЂРІРѕРіРѕ РєР»СЋС‡Р° Рё РґРµР»РёРј РЅР° СЂР°Р·РЅРёС†Сѓ. 
+															// Р—Р°РїСѓС‚С‹РІР°СЋС‰Р°СЏ С„РѕСЂРјСѓР»Р°, РїРѕС‚РѕРј РѕР±СЉСЏСЃРЅСЋ)
                                                    
 			POD_Math::QuatSlerp(SlerpResult,Keys[Key1].rotation,Keys[Key2].rotation,Scalar);
 			POD_Math::QuatNormalize(Normal,SlerpResult);
@@ -56,13 +56,13 @@
 
 
 
-	SkeletalAnimation::Bone::Bone(): Children(),       //Обнуляем 2 указателя, 2 переменные и обратную матрицу первого кадра
+	SkeletalAnimation::Bone::Bone(): Children(),       //РћР±РЅСѓР»СЏРµРј 2 СѓРєР°Р·Р°С‚РµР»СЏ, 2 РїРµСЂРµРјРµРЅРЅС‹Рµ Рё РѕР±СЂР°С‚РЅСѓСЋ РјР°С‚СЂРёС†Сѓ РїРµСЂРІРѕРіРѕ РєР°РґСЂР°
 									SharedArray(),
 									NumChildren(),
 									MaxChildren(),
 									Space(){};
 
-	SkeletalAnimation::Bone::~Bone(){ delete[] Children;  }; // Просто высвобожаем память под массив детей
+	SkeletalAnimation::Bone::~Bone(){ delete[] Children;  }; // РџСЂРѕСЃС‚Рѕ РІС‹СЃРІРѕР±РѕР¶Р°РµРј РїР°РјСЏС‚СЊ РїРѕРґ РјР°СЃСЃРёРІ РґРµС‚РµР№
 
 	bool SkeletalAnimation::Bone::Allocate(size_t size)
 	{
@@ -71,7 +71,7 @@
 
 		if(!Children) 
 		{
-			ErrorHandler::ShowWarning(L"Проблема с аллокацией в экземпляре скелета");
+			ErrorHandler::ShowWarning(L"РџСЂРѕР±Р»РµРјР° СЃ Р°Р»Р»РѕРєР°С†РёРµР№ РІ СЌРєР·РµРјРїР»СЏСЂРµ СЃРєРµР»РµС‚Р°");
 
 			return false;
 		};
@@ -88,7 +88,7 @@
 		Bone**tmp = new(std::nothrow) Bone*[MaxChildren*2];
 		if(!tmp) 
 		{
-			ErrorHandler::ShowWarning(L"Проблема при реаллокации массива внутренних структур костей скелета");
+			ErrorHandler::ShowWarning(L"РџСЂРѕР±Р»РµРјР° РїСЂРё СЂРµР°Р»Р»РѕРєР°С†РёРё РјР°СЃСЃРёРІР° РІРЅСѓС‚СЂРµРЅРЅРёС… СЃС‚СЂСѓРєС‚СѓСЂ РєРѕСЃС‚РµР№ СЃРєРµР»РµС‚Р°");
 			return false;
 		};
 
@@ -113,7 +113,7 @@
 	{
 		if(NumChildren==MaxChildren) 
 		{
-			ErrorHandler::ShowWarning(L"Недостаточно места в буфере указателей одной из костей скелета");
+			ErrorHandler::ShowWarning(L"РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РјРµСЃС‚Р° РІ Р±СѓС„РµСЂРµ СѓРєР°Р·Р°С‚РµР»РµР№ РѕРґРЅРѕР№ РёР· РєРѕСЃС‚РµР№ СЃРєРµР»РµС‚Р°");
 
 			return false;
 		};
@@ -144,7 +144,7 @@
 			};
 	};
 
-		// ВНИМАНИЕ! РЕКУРСИЯ!
+		// Р’РќРРњРђРќРР•! Р Р•РљРЈР РЎРРЇ!
 	void SkeletalAnimation::Bone::UpdateChild(const unsigned long t,
 												POD_Math::Matrix4x3& p)
 	{
@@ -153,9 +153,9 @@
 		POD_Math::Matrix4x3 Complete     = POD_Math::Matrix4x3();
 		POD_Math::Matrix4x3 Combined     = POD_Math::Matrix4x3();
 
-			// 3 матрицы - Интерполированная локальная, 
-			// Интерполированная комбинированная перемноженная на обратную матрицу 1 кадра.
-			// Интерполированная локальная, перемноженная на интерполированную мировую родительскую.
+			// 3 РјР°С‚СЂРёС†С‹ - РРЅС‚РµСЂРїРѕР»РёСЂРѕРІР°РЅРЅР°СЏ Р»РѕРєР°Р»СЊРЅР°СЏ, 
+			// РРЅС‚РµСЂРїРѕР»РёСЂРѕРІР°РЅРЅР°СЏ РєРѕРјР±РёРЅРёСЂРѕРІР°РЅРЅР°СЏ РїРµСЂРµРјРЅРѕР¶РµРЅРЅР°СЏ РЅР° РѕР±СЂР°С‚РЅСѓСЋ РјР°С‚СЂРёС†Сѓ 1 РєР°РґСЂР°.
+			// РРЅС‚РµСЂРїРѕР»РёСЂРѕРІР°РЅРЅР°СЏ Р»РѕРєР°Р»СЊРЅР°СЏ, РїРµСЂРµРјРЅРѕР¶РµРЅРЅР°СЏ РЅР° РёРЅС‚РµСЂРїРѕР»РёСЂРѕРІР°РЅРЅСѓСЋ РјРёСЂРѕРІСѓСЋ СЂРѕРґРёС‚РµР»СЊСЃРєСѓСЋ.
 
 		Interpolator.GetInterpolated(t, Interpolated);
 		POD_Math::Matrix4x3Mul(Combined, Interpolated,p);
@@ -171,18 +171,18 @@
 	};
 
 	SkeletalAnimation::SLERP& SkeletalAnimation::Bone::GetInterpolator()
-	{      // Возвращаем ссылку на интерполятор для дальнейшей инициализации
+	{      // Р’РѕР·РІСЂР°С‰Р°РµРј СЃСЃС‹Р»РєСѓ РЅР° РёРЅС‚РµСЂРїРѕР»СЏС‚РѕСЂ РґР»СЏ РґР°Р»СЊРЅРµР№С€РµР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
 		return Interpolator;
 	};
 
 	void SkeletalAnimation::Bone::SetSharedArray(POD_Math::Matrix4x3*const p)
-	{      // Просто задаем указатель
+	{      // РџСЂРѕСЃС‚Рѕ Р·Р°РґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ
 		SharedArray=p;
 	};
 
 	void SkeletalAnimation::Bone::SetSpaceMatrix(POD_Math::Matrix4x3& mat)
 	{
-			//Быстро копируем байты
+			//Р‘С‹СЃС‚СЂРѕ РєРѕРїРёСЂСѓРµРј Р±Р°Р№С‚С‹
 		memcpy(&Space,&mat,sizeof(POD_Math::Matrix4x3));  
 	};
 
@@ -199,7 +199,7 @@
 		delete[] AllKeys;
 	};
 
-	// Выстраиваем иерархию
+	// Р’С‹СЃС‚СЂР°РёРІР°РµРј РёРµСЂР°СЂС…РёСЋ
 	bool SkeletalAnimation::Skeleton::Build(vBone*    const bones,
 											Keyframe* const keys,
 											const size_t NumB,
@@ -209,7 +209,7 @@
 		Bones = new(std::nothrow) Bone[NumB]; 
 		if(!Bones) 
 		{
-			ErrorHandler::ShowWarning(L"Проблемы с аллокацией буфера внутренних структур костей скелета");
+			ErrorHandler::ShowWarning(L"РџСЂРѕР±Р»РµРјС‹ СЃ Р°Р»Р»РѕРєР°С†РёРµР№ Р±СѓС„РµСЂР° РІРЅСѓС‚СЂРµРЅРЅРёС… СЃС‚СЂСѓРєС‚СѓСЂ РєРѕСЃС‚РµР№ СЃРєРµР»РµС‚Р°");
 
 			return false;
 		};
@@ -219,7 +219,7 @@
 		SharedArray = new(std::nothrow) POD_Math::Matrix4x3[NumB];
 		if(!SharedArray) 
 		{
-			ErrorHandler::ShowWarning(L"Проблемы с аллокацией общего буфера униформ скелета");
+			ErrorHandler::ShowWarning(L"РџСЂРѕР±Р»РµРјС‹ СЃ Р°Р»Р»РѕРєР°С†РёРµР№ РѕР±С‰РµРіРѕ Р±СѓС„РµСЂР° СѓРЅРёС„РѕСЂРј СЃРєРµР»РµС‚Р°");
 
 			return false;
 		}; 
@@ -227,19 +227,19 @@
 			for(size_t nB=0; nB < NumB; ++nB)
 			{
 				
-				if(!Bones[nB].Allocate(10)) return false;                    // Дадим каждой кости памяти на 10 указателей
+				if(!Bones[nB].Allocate(10)) return false;                    // Р”Р°РґРёРј РєР°Р¶РґРѕР№ РєРѕСЃС‚Рё РїР°РјСЏС‚Рё РЅР° 10 СѓРєР°Р·Р°С‚РµР»РµР№
 
-				if(bones[nB].Parent==-1) {                                   // Если -1 - это наш корень
+				if(bones[nB].Parent==-1) {                                   // Р•СЃР»Рё -1 - СЌС‚Рѕ РЅР°С€ РєРѕСЂРµРЅСЊ
 					Root = &Bones[nB]; }
-				else Bones[bones[nB].Parent].AttachBone(&Bones[nB]);         // Если нет, тогда устанавливаем связь
+				else Bones[bones[nB].Parent].AttachBone(&Bones[nB]);         // Р•СЃР»Рё РЅРµС‚, С‚РѕРіРґР° СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃРІСЏР·СЊ
 
-				Bones[nB].SetSpaceMatrix(bones[nB].Inverse);                 // Копируем инверсию
-				Bones[nB].SetSharedArray(&SharedArray[nB]);                  // Передаем указатель на элемент общего массива
-				Bones[nB].GetInterpolator().Initialize(&keys[nB*NumK],NumK); // Через ссылку передаем ключи интерполятору.
+				Bones[nB].SetSpaceMatrix(bones[nB].Inverse);                 // РљРѕРїРёСЂСѓРµРј РёРЅРІРµСЂСЃРёСЋ
+				Bones[nB].SetSharedArray(&SharedArray[nB]);                  // РџРµСЂРµРґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЌР»РµРјРµРЅС‚ РѕР±С‰РµРіРѕ РјР°СЃСЃРёРІР°
+				Bones[nB].GetInterpolator().Initialize(&keys[nB*NumK],NumK); // Р§РµСЂРµР· СЃСЃС‹Р»РєСѓ РїРµСЂРµРґР°РµРј РєР»СЋС‡Рё РёРЅС‚РµСЂРїРѕР»СЏС‚РѕСЂСѓ.
 			};
 
-			delete[]bones; // Иерархия восстановлена, эти POD'ы больше не нужны 
-			AllKeys=keys;  // Массив ключей, которыми оперируют интерполяторы. Высвобождается в деструкторе скелета.
+			delete[]bones; // РРµСЂР°СЂС…РёСЏ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅР°, СЌС‚Рё POD'С‹ Р±РѕР»СЊС€Рµ РЅРµ РЅСѓР¶РЅС‹ 
+			AllKeys=keys;  // РњР°СЃСЃРёРІ РєР»СЋС‡РµР№, РєРѕС‚РѕСЂС‹РјРё РѕРїРµСЂРёСЂСѓСЋС‚ РёРЅС‚РµСЂРїРѕР»СЏС‚РѕСЂС‹. Р’С‹СЃРІРѕР±РѕР¶РґР°РµС‚СЃСЏ РІ РґРµСЃС‚СЂСѓРєС‚РѕСЂРµ СЃРєРµР»РµС‚Р°.
 
 				return true ;
 		};
@@ -247,7 +247,7 @@
 
 		void SkeletalAnimation::Skeleton::Update(const unsigned long t)
 		{
-			Root->UpdateRoot(t); // С помощью иерархии в соответствии с ПК расчитываем матрицы костей 
+			Root->UpdateRoot(t); // РЎ РїРѕРјРѕС‰СЊСЋ РёРµСЂР°СЂС…РёРё РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ РџРљ СЂР°СЃС‡РёС‚С‹РІР°РµРј РјР°С‚СЂРёС†С‹ РєРѕСЃС‚РµР№ 
 		};
 
 		size_t SkeletalAnimation::Skeleton::GetNumBones()const
